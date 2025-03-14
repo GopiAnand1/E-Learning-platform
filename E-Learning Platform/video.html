@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Course</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        video {
+            width: 80%;
+            max-width: 800px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="course-title">Course Title</h1>
+    <video id="course-video" controls>
+        <source id="video-source" src="" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <div id="course-content"></div>
+
+    <script>
+        // Function to get query parameters
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        // Set course details dynamically
+        document.getElementById('course-title').innerText = getQueryParam('title');
+        document.getElementById('video-source').src = getQueryParam('video');
+
+        // Fetch course content dynamically
+        fetch(getQueryParam('content'))
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('course-content').innerHTML = data;
+            })
+            .catch(err => console.error('Error loading content:', err));
+    </script>
+</body>
+</html>
